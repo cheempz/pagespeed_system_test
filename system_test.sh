@@ -19,9 +19,9 @@ else
   echo WGET = $WGET
 fi
 
-$WGET --version | head -1 | grep 1.12 >/dev/null
+$WGET --version | head -1 | grep 1.1[2-9] >/dev/null
 if [ $? != 0 ]; then
-  echo You have the wrong version of wget.  1.12 is required.
+  echo You have the wrong version of wget.  1.12+ is required.
   exit 1
 fi
 
@@ -32,7 +32,7 @@ if [ $PORT = $HOSTNAME ]; then
 fi;
 EXAMPLE_ROOT=http://$HOSTNAME/mod_pagespeed_example
 STATISTICS_URL=http://localhost:$PORT/mod_pagespeed_statistics
-BAD_RESOURCE_URL=http://$HOSTNAME/mod_pagespeed/ic.a.bad.css
+BAD_RESOURCE_URL=http://$HOSTNAME/mod_pagespeed_example/_.pagespeed.co.abcde12345.css
 
 OUTDIR=/tmp/mod_pagespeed_test.$USER/fetched_directory
 rm -rf $OUTDIR
@@ -131,14 +131,14 @@ echo TEST: 404s are served and properly recorded.
 NUM_404=$($WGET_DUMP $STATISTICS_URL | grep resource_404_count | cut -d: -f2)
 NUM_404=$(($NUM_404+1))
 check "$WGET -O /dev/null $BAD_RESOURCE_URL 2>&1| grep -q '404 Not Found'"
-check "$WGET_DUMP $STATISTICS_URL | grep -q 'resource_404_count: $NUM_404'"
+check "$WGET_DUMP $STATISTICS_URL | grep -q 'resource_404_count: \+$NUM_404'"
 
 echo TEST: directory is mapped to index.html.
 rm -rf $OUTDIR
 mkdir -p $OUTDIR
 check "$WGET_PREREQ $EXAMPLE_ROOT"
 check "$WGET_PREREQ $EXAMPLE_ROOT/index.html"
-check diff $OUTDIR/index.html $OUTDIR/mod_pagespeed_example
+check "diff --ignore-matching-lines '.\+;pagespeed.criticalImagesBeaconInit.\+' $OUTDIR/index.html $OUTDIR/mod_pagespeed_example"
 
 echo TEST: compression is enabled for HTML.
 check "$WGET -O /dev/null -q -S --header='Accept-Encoding: gzip' \
@@ -166,16 +166,18 @@ test_filter elide_attributes removes boolean and default attributes.
 check $WGET_PREREQ $URL
 grep "disabled=" $FETCHED   # boolean, should not find
 check [ $? != 0 ]
-grep "type=" $FETCHED       # default, should not find
+grep "method=" $FETCHED     # default, should not find
 check [ $? != 0 ]
+grep "type=" $FETCHED       # type="text" is preserved
+check [ $? != 1 ]
 
 test_filter extend_cache rewrites an image tag.
-fetch_until $URL 'grep -c src.*40265e' 1
+fetch_until $URL 'grep -c Puzzle\.jpg\.pagespeed\..\+\.jpg' 1
 check $WGET_PREREQ $URL
 
 test_filter move_css_to_head does what it says on the tin.
 check $WGET_PREREQ $URL
-check grep -q "'<head><link'" $FETCHED  # link moved to head
+check grep -q "'<link.\+</head'" $FETCHED  # link moved to head
 
 test_filter inline_css converts a link tag to a style tag
 fetch_until $URL 'grep -c style' 2
@@ -190,8 +192,8 @@ check egrep -q "'<style.*small'" $FETCHED           # not outlined
 
 test_filter outline_javascript outlines large scripts, but not small ones.
 check $WGET_PREREQ $URL
-check egrep -q "'<script.*src=.*large'" $FETCHED       # outlined
-check egrep -q "'<script.*small.*var hello'" $FETCHED  # not outlined
+check egrep -q "'<script.*src=.*\.pagespeed\..+\.js'" $FETCHED  # outlined
+check egrep -q "'<script.*small.> var hello'" $FETCHED          # not outlined
 
 echo TEST: compression is enabled for rewritten JS.
 JS_URL=$(egrep -o http://.*.js $FETCHED)
@@ -206,17 +208,19 @@ check grep -q preserved $FETCHED       # preserves IE directives
 
 test_filter remove_quotes does what it says on the tin.
 check $WGET_PREREQ $URL
-check [ `sed 's/ /\n/g' $FETCHED | grep -c '"' ` = 2 ]  # 2 quoted attrs
-check [ `grep -c "'" $FETCHED` = 0 ]                    # no apostrophes
+check [ `grep '<img' $FETCHED | sed 's/ /\n/g' | grep -c '"' ` = 2 ]  # 2 quoted attrs
+check [ `grep '<img' $FETCHED | grep -c "'" ` = 0 ]                   # no apostrophes
 
 test_filter rewrite_css removes comments and saves a bunch of bytes.
 check $WGET_PREREQ $URL
-grep "comment" $FETCHED                   # comment, should not find
+grep "comment" $FETCHED                    # comment, should not find
 check [ $? != 0 ]
-check [ `stat -c %s $FETCHED` -lt 315 ]   # down from 472
+orig_size=472
+byte_savings=115                           # should save about this many bytes
+check [ `stat -c %s $FETCHED` -lt $((orig_size - byte_savings)) ]
 
 test_filter rewrite_images inlines, compresses, and resizes.
-fetch_until $URL 'grep -c image/png' 1    # inlined
+fetch_until $URL 'egrep -c \.(jpg|png)\.pagespeed\..+\.(jpg|png)' 3
 check $WGET_PREREQ $URL
 check [ `stat -c %s $OUTDIR/*1023x766*Puzzle*` -lt 241260 ]  # compressed
 check [ `stat -c %s $OUTDIR/*256x192*Puzzle*`  -lt 24126  ]  # resized
@@ -233,13 +237,15 @@ echo "$IMG_HEADERS" | grep -qi 'Content-Encoding: gzip'
 check [ $? != 0 ]
 
 test_filter rewrite_javascript removes comments and saves a bunch of bytes.
-fetch_until $URL 'grep -c src.*9257c' 2   # external scripts rewritten
+fetch_until $URL 'grep -c rewrite_javascript\.js\.pagespeed\..\+\.js' 2   # external scripts rewritten
 check $WGET_PREREQ $URL
 grep -R "removed" $OUTDIR                 # comments, should not find any
 check [ $? != 0 ]
-check [ `stat -c %s $FETCHED` -lt 1560 ]  # net savings
+orig_size=1553
+byte_savings=160                          # should save about this many bytes
+check [ `stat -c %s $FETCHED` -lt $((orig_size - byte_savings)) ]
 check grep -q preserved $FETCHED          # preserves certain comments
 # rewritten JS is cache-extended
-check grep -q "'Cache-control: public, max-age=31536000'" $WGET_OUTPUT
+check grep -q "'Cache-Control: max-age=31536000'" $WGET_OUTPUT
 rm -rf $OUTDIR
 echo "PASS."
