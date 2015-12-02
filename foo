@@ -1,0 +1,301 @@
+<system.applicationHost>
+  <applicationPools>
+    <applicationPoolDefaults>
+      <processModel identityType="ApplicationPoolIdentity" />
+      <recycling>
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </applicationPoolDefaults>
+    <add name="DefaultAppPool" managedRuntimeVersion="v4.0">
+      <processModel />
+      <recycling>
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="Classic .NET AppPool" managedRuntimeVersion="v4.0" managedPipelineMode="Classic">
+      <processModel />
+      <recycling>
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="ASP.NET v4.0" managedRuntimeVersion="v4.0">
+      <processModel />
+      <recycling>
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="ASP.NET v4.0 Classic" managedRuntimeVersion="v4.0" managedPipelineMode="Classic">
+      <processModel />
+      <recycling>
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="App32Dll" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="ApplicationPoolIdentity" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspNetworkService_F20" enable32BitAppOnWin64="true" managedRuntimeVersion="v2.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="ClassicAspNetworkService_F20" enable32BitAppOnWin64="true" managedRuntimeVersion="v2.0" managedPipelineMode="Classic">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspNetworkService_F40" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="ClassicAspNetworkService_F40" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Classic">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspNoDb_F40" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="ApplicationPoolIdentity" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspNoDb_F45" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="ApplicationPoolIdentity" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspWebReqManagedOracleTest_F45" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspWebReqUnManagedOracleTest_F20" enable32BitAppOnWin64="true" managedRuntimeVersion="v2.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AspWebReqUnManagedOracleTest_F45" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AsyncAdo_64bit_F45" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="AsyncAdo_wow64_F45" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="MVC3_F45" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="MVC5_HttpClientTest_F45" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="MVC5_EndpointTest_F45" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_64bit_F45_basichttp" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_64bit_F45_wshttp" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_64bit_F45_nettcp" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_64bit_F45_netpipe" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_ASMX_64bit_F35" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_ASMX_64bit_F45" enable32BitAppOnWin64="false" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+    <add name="WCF_ASMX_wow64_F45" enable32BitAppOnWin64="true" managedRuntimeVersion="v4.0" managedPipelineMode="Integrated">
+      <processModel identityType="NetworkService" />
+      <recycling logEventOnRecycle="Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory">
+        <periodicRestart>
+          <schedule>
+          </schedule>
+        </periodicRestart>
+      </recycling>
+      <failure />
+      <cpu />
+    </add>
+  </applicationPools>
+</system.applicationHost>
