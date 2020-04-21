@@ -1,3 +1,8 @@
+<details>
+  <summary>Click to expand!</summary>
+  * hi
+</details>
+
 mod_pagespeed examples
 
 Install the mod_pagespeed examples under the /mod_pagespeed_example
@@ -6,3 +11,5 @@ to verify the installation of mod_pagespeed. Invoke the system test by
 passing the hostname of your web server to the system test script:
 
 ./system_test.sh hostname
+
+## foo
