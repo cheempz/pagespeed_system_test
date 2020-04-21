@@ -1,6 +1,8 @@
 <details>
   <summary>Click to expand!</summary>
-  * hi
+  
+  * [foo](#foo)
+  
 </details>
 
 mod_pagespeed examples
